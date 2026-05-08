@@ -13,19 +13,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout void-notes (contenido)
+      - name: Checkout void-notes (contenido del usuario)
         uses: actions/checkout@v4
         with:
           path: content
           fetch-depth: 0
 
-      - name: Checkout void-pages (motor)
+      - name: Checkout void-pages (motor del sitio)
         uses: actions/checkout@v4
         with:
           repository: welcomethevoid/void-pages
           path: engine
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -37,8 +37,9 @@ jobs:
       - name: Build site
         run: node engine/build.js
         env:
-          CONTENT_DIR: ${{ github.workspace }}/content
-          OUTPUT_DIR: ${{ github.workspace }}/dist
+          CONTENT_DIR: ${'$'}{{ github.workspace }}/content
+          OUTPUT_DIR: ${'$'}{{ github.workspace }}/dist
+          BASE_PATH: /void-notes
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -50,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${'$'}{{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
