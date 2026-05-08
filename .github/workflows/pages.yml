@@ -1,6 +1,4 @@
-En el `pages.yml` de `void-notes`, reemplazar todo el contenido por esto:
 
-```yaml
 name: Deploy VOID Pages
 on:
   push:
@@ -49,12 +47,3 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-```
-
-Y también pasale al agente que en la constante `PAGES_WORKFLOW` de Kotlin, las variables de GitHub Actions tienen que escaparse como `${'$'}{{ }}` para que Kotlin no las interprete — eso ya lo tenía bien, el problema es que ese escape tiene que desaparecer en el archivo final. La solución correcta en Kotlin es usar una raw string o escapar solo el `$`:
-
-```kotlin
-CONTENT_DIR: ${"$"}{{ github.workspace }}/content
-```
-
-O más simple, reemplazar `${'$'}` por `${"$"}` en toda la constante.
